@@ -1,0 +1,50 @@
+<%= if !@current_user do %>
+<script>window.location.replace("<%=user_path(@conn, :login)%>");</script>
+<% end %>
+<div class="container">
+  <div class="row">
+    <h1 class="center-block">Task Tracker!</h1>
+  </div>
+  <hr><br/>
+  <%= if @current_user.manager== "Yes" do %>
+  <p>User Status: Manager!</p>
+  <% else %>
+  <p>User Status: Normal User</p>
+  <% end %>
+  <%= if @mName do %>
+  <p>My Manager: <%= @mName %></p>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <p>
+        <a href=<%= user_path(@conn, :index) %> class="btn btn-primary">List of Users</a>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p>
+        <a href="/tasks/" class="btn btn-info">List of Assigned Tasks</a>
+      </p>
+    </div>
+  </div>
+
+  <%= if @current_user.manager== "Yes" do %>
+  <div class="row">
+    <div class="col-md-6">
+      <p>
+        <a href=<%= manage_path(@conn, :new) %> class="btn btn-info">Assign Subordinates</a>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p>
+        <a href=<%= manage_path(@conn, :index) %> class="btn btn-primary">Manage Subordinates</a>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p>
+        <a href=<%= task_path(@conn, :assigned_tasks) %> class="btn btn-success">List of Tasks Assigned to Subordinates</a>
+      </p>
+    </div>
+  </div>
+</div>
+<%end%>

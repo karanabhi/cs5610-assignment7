@@ -1,0 +1,65 @@
+<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script type="text/javascript">
+createTimeBlock();
+
+function createTimeBlock(){
+  let start_time="<%= @time_params.start %>";
+  let end_time="<%= @time_params.end %>";
+  let tid="<%= @task.id %>";
+
+  time_params={
+    "start": start_time,
+    "end": end_time,
+    "task_id": tid
+  }
+
+  $.ajax("/time_blocks",{
+    method: "POST",
+    data: JSON.stringify(time_params),
+    contentType: "application/json; charset=UTF-8",
+    success: (resp) => { alert("Task Assigned successfully!"); }
+  });
+
+}//createTimeBlock()
+</script>
+
+
+<h2>Show Task</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @task.title %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @task.description %>
+  </li>
+
+  <li>
+    <strong>Assigned To:</strong>
+    <%= @task.assigned_to %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @task.status %>
+  </li>
+
+  <li>
+    <strong>Start Time:</strong>
+    <%= @time_params.start %>
+  </li>
+  <li>
+    <strong>End Time:</strong>
+    <%= @time_params.start %>
+  </li>
+
+</ul>
+
+<span><%= link "Back", to: page_path(@conn, :landing) %></span>

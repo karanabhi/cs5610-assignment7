@@ -1,0 +1,15 @@
+<h1 class="center-block">Log in</h1>
+<!-- session_path(@conn, :create) -->
+<div class="container">
+<%= form_tag("/session", method: :post) do %>
+<div class="form-group">
+  <label for="email">Email:</label>
+  <input type="email" name="email" id="email" placeholder="user@example.com" class="form-control">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <p><button class="btn btn-primary">Log in</button></p>
+</div>
+<div>
+  <%= link "Home", to: page_path(@conn, :index) %> |
+  <%= link "Register", to: user_path(@conn, :new) %>
+</div>
+<% end %>
+</div>

@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <h1 class="center-block">Welcome to Task Tracker!</h1>
+  </div>
+  <hr><br/>
+  <div class="row">
+    <h4>Users of your app should be able to:</h4>
+    <ul>
+      <li>Register an account</li>
+      <li>Log in / Log out</li>
+      <li>Assign tasks to themselves or other users</li>
+      <li>Create Tasks, entering a title and a description</li>
+      <li>Track how long they've worked on a task they're assigned to, in 15-minute increments.</li>
+      <li>Mark a task as completed.</li>
+    </ul>
+  </div>
+  <div class="row">
+    <%= if !@current_user do %>
+    <div class="col-md-6">
+      <p>
+        <a href=<%= user_path(@conn, :login) %> class="btn btn-primary">Login!</a>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <a href=<%= user_path(@conn, :new) %> class="btn btn-info">Register!</a>
+    </div>
+    <% else %>
+    <div class="col-md-6">
+      <a href=<%= user_path(@conn, :new) %> class="btn btn-info">Register!</a>
+    </div>
+    <% end %>
+  </div>
+</div>

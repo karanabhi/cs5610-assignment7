@@ -1,0 +1,39 @@
+<h2>Tasks Assigned</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Assigned To</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for task <- @tasks do %>
+    <%= for tb <- @taskassigned do %>
+
+    <%= if tb.task_id==task.id do %>
+    <tr>
+      <td><%= task.title %></td>
+      <td><%= task.description %></td>
+      <td><%= task.status %></td>
+      <td><%= task.assigned_to %></td>
+      <td><%= tb.start %></td>
+      <td><%= tb.end %></td>
+
+      <td class="text-right">
+        <span><%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+    <% end %>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= link "Home", to: page_path(@conn, :landing) %></span> |
+<span><%= link "List of Users", to: user_path(@conn, :index) %></span>

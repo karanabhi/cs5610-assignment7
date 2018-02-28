@@ -1,0 +1,28 @@
+<%= if !@current_user do %>
+<script>window.location.replace("<%=user_path(@conn, :login)%>");</script>
+<% end %>
+<%= if @current_user.manager== "No" do %>
+<script>
+alert("Only Managers are allowed to access this page!")
+window.location.replace("<%=page_path(@conn, :landing)%>");
+</script>
+<%end%>
+<h1 class="center-block">Assign Subordinates:</h1>
+<hr><br/>
+
+<!-- session_path(@conn, :create) -->
+<div class="container">
+<%= form_tag(manage_path(@conn, :create), method: :post) do %>
+<div class="form-group">
+  <label for="subordinate_id">*Assign To (User Id):</label>
+  <a href="<%= user_path(@conn, :index) %>">Refer to list of Users for User Id</a>
+  <p><input type="number" name="subordinate_id" id="subordinate_id" class="form-control"></p>
+
+  <p><input type="hidden" name="manager_id" id="manager_id" class="form-control" value=<%= @current_user.id%> ></p>
+
+  <p><button class="btn btn-primary">Assign</button></p>
+</div>
+<div>
+  <span><%= link "Back", to: page_path(@conn, :landing) %></span>
+  <% end %>
+</div>

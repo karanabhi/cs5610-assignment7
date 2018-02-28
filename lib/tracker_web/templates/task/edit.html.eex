@@ -1,0 +1,35 @@
+<h1 class="center-block">Edit Task:</h1>
+<hr><br/>
+<script>
+window.task_path="<%= task_path(@conn, :create) %>";
+</script>
+<!-- session_path(@conn, :create) -->
+<div class="container">
+  <%= form_tag(task_path(@conn, :edit), method: :post) do %>
+  <div class="form-group">
+    <label for="title">*Title:</label>
+    <p><input type="text" required name="title" id="title" class="form-control"></p>
+
+    <label for="description">Description:</label>
+    <p><textarea rows="5" cols="90" name="description" id="description" class="form-control"></textarea></p>
+
+    <label for="assigned_to">Assigned To (User Id):</label>
+    <p><input type="number" readonly name="assigned_to" id="assigned_to" value= <%= @sid %> class="form-control"></p>
+
+    <p><input type="hidden" name="status" id="status" class="form-control" value="In Progress"></p>
+
+    <label for="start_time">*Start Time:</label>
+    <p><input type="datetime-local" required name="start_time" id="start_time" class="form-control"></p>
+
+    <label for="end_time">*End Time:</label>
+    <p><input type="datetime-local" required name="end_time" id="end_time" class="form-control"></p>
+
+    <p><input type="hidden" name="user_id" id="user_id" value=<%= @current_user.id %> class="form-control"></p>
+
+    <p><button class="btn btn-primary" >Create</button></p>
+  </div>
+  <% end %>
+  <div>
+    <span><%= link "Back", to: manage_path(@conn, :index) %></span>
+  </div>
+</script>

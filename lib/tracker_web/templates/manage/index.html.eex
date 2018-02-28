@@ -1,0 +1,34 @@
+<%= if @current_user.manager== "No" do %>
+<script>
+alert("Only Managers are allowed to access this page!")
+window.location.replace("<%=page_path(@conn, :landing)%>");
+</script>
+<%end%>
+<h2>Subordinates Assigned</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Subordinate ID</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for manage <- @manages do %>
+    <%= if manage.manager_id == @current_user.id do %>
+    <tr>
+      <td><%= sid = manage.subordinate_id %><td>
+        <td class="text-right">
+          <!-- <span><%= link "Show", to: manage_path(@conn, :show, manage), class: "btn btn-default btn-xs" %></span> -->
+          <!-- <span><%= link "Edit", to: manage_path(@conn, :edit, manage), class: "btn btn-default btn-xs" %></span> -->
+          <span><%= link "Assign Task", to: task_path(@conn, :new, %{"sid"=> sid}), method: :get, class: "btn btn-success btn-xs"%>&nbsp;&nbsp;</span>
+          <span><%= link "Remove", to: manage_path(@conn, :delete, manage), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        </td>
+      </tr>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <span><%= link "Assign Subordinates", to: manage_path(@conn, :new) %></span> |
+  <span><%= link "Home", to: page_path(@conn, :landing) %></span>

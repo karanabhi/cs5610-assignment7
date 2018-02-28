@@ -1,0 +1,88 @@
+<h1 class="center-block">Create new Task:</h1>
+<hr><br/>
+<script>
+window.task_path="<%= task_path(@conn, :create) %>";
+</script>
+<!-- session_path(@conn, :create) -->
+<div class="container">
+  <%= form_tag(task_path(@conn, :create), method: :post) do %>
+  <div class="form-group">
+    <label for="title">*Title:</label>
+    <p><input type="text" required name="title" id="title" class="form-control"></p>
+
+    <label for="description">Description:</label>
+    <p><textarea rows="5" cols="90" name="description" id="description" class="form-control"></textarea></p>
+
+    <label for="assigned_to">Assigned To (User Id):</label>
+    <p><input type="number" readonly name="assigned_to" id="assigned_to" value= <%= @sid %> class="form-control"></p>
+
+    <p><input type="hidden" name="status" id="status" class="form-control" value="In Progress"></p>
+
+    <label for="start_time">*Start Time:</label>
+    <p><input type="datetime-local" required name="start_time" id="start_time" class="form-control"></p>
+
+    <label for="end_time">*End Time:</label>
+    <p><input type="datetime-local" required name="end_time" id="end_time" class="form-control"></p>
+
+    <p><input type="hidden" name="user_id" id="user_id" value=<%= @current_user.id %> class="form-control"></p>
+
+    <p><button class="btn btn-primary" >Create</button></p>
+  </div>
+  <% end %>
+  <div>
+    <span><%= link "Back", to: manage_path(@conn, :index) %></span>
+  </div>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript">
+
+  function createTask(){
+
+    let title=document.getElementById("title").value;
+    let description=document.getElementById("description").value;
+    let assigned_to=document.getElementById("assigned_to").value;
+    let status=document.getElementById("status").value;
+    let user_id=document.getElementById("user_id").value;
+    let start_time=document.getElementById("start_time").value;
+    let end_time=document.getElementById("end_time").value;
+
+    task_params={
+      "title": title,
+      "description": description,
+      "assigned_to": assigned_to,
+      "status": status,
+      "user_id": user_id,
+      "start": start_time,
+      "end": end_time,
+    }
+    //alert(task_params.title+"\n"+task_params.description+"\n"+task_params.assigned_to+"\n"+task_params.status+"\n"+task_params.user_id)
+
+    $.ajax(task_path,{
+      method: "POST",
+      data: JSON.stringify(task_params),
+      contentType: "application/json; charset=UTF-8",
+      success: (resp) => { alert("Task succesfully created!") }
+    });
+  }//createTask()
+
+  function createTimeBlock(tid){
+    let start_time=document.getElementById("start_time").value;
+    let end_time=document.getElementById("end_time").value;
+    alert(start_time+"\n"+end_time+"\n"+tid);
+    time_params={
+      "start": start_time,
+      "end": end_time,
+      "task_id": tid
+    }
+    /*  $.ajax("/time_blocks",{
+    method: "POST",
+    data: JSON.stringify(time_params),
+    contentType: "application/json; charset=UTF-8",
+    success: (resp) => { console.log("RespNew:"+"yippie") }
+  });
+  */
+}//createTimeBlock()
+
+</script>
